@@ -36,11 +36,10 @@ describe('Tests for tunneled-got', () => {
         });
 
         const jsonUrl = 'https://jsonplaceholder.typicode.com/todos/1';
-        it('return body', async () => {
-            const resBodyJson = JSON.parse(await client.get(jsonUrl));
+        it('return body as JSON', async () => {
+            const resBodyJson = await client.get(jsonUrl);
             resBodyJson.should.have.property('userId');
         });
-
     });
 
     const headers1 = {
@@ -118,5 +117,22 @@ describe('Tests for tunneled-got', () => {
             client.options().timeout.should.not
                 .have.property('request', 5000);
         });
+    });
+
+    describe('post() should ...', () => {
+        const postUrl = 'https://jsonplaceholder.typicode.com/posts';
+        const data = {
+            title: 'Kenneth Simon',
+            body: 'Duis aute esse eiusmod aute do fugiat id.',
+            userId: 'd3621c6b-2bfc-5dea-b317-a39060e48531'
+        };
+        it('send data and return response body as JSON', async () => {
+            const resBodyJson = await client.post(postUrl, data);
+            resBodyJson.should.have.property('title', data.title);
+            resBodyJson.should.have.property('body', data.body);
+            resBodyJson.should.have.property('userId', data.userId);
+        });
+
+        // send body
     });
 });

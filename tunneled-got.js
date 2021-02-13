@@ -22,10 +22,21 @@ client.reset = () => {
 }
 
 client.get = async (url) => {
-    if ((url === undefined) || (url === null) || (url === ''))
-        throw new Error('No url provided');
+    validateExists(url);
 
-    const response = await httpClient().get(url);
+    const response = await httpClient().get(url, {
+        responseType: 'json'
+    });
+    return response.body;
+}
+
+client.post = async (url, data) => {
+    validateExists(url);
+
+    const response = await httpClient().post(url, {
+        json: data,
+        responseType: 'json'
+    });
     return response.body;
 }
 
@@ -81,3 +92,8 @@ const withProxy = (instance) => {
 }
 
 module.exports = client;
+
+function validateExists(url) {
+    if ((url === undefined) || (url === null) || (url === ''))
+        throw new Error('No url provided');
+}
