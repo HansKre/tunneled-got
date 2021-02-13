@@ -40,6 +40,33 @@ client.post = async (url, data) => {
     return response.body;
 }
 
+client.fetch = async (url, options) => {
+    let METHOD;
+    let data;
+    if (options) {
+        if (options.hasOwnProperty('headers')) {
+            client.headers(options.headers);
+        }
+        if (options.hasOwnProperty('method')) {
+            METHOD = options.method;
+        }
+        if (options.hasOwnProperty('body')) {
+            data = options.body;
+        } else {
+            data = {};
+        }
+    }
+    if (!METHOD) {
+        // assume 'GET' if not set
+        return client.get(url);
+    } else if (METHOD === 'POST') {
+        // parse data since it gets stringified in post() method while it is already stringified in fetch()-input
+        return client.post(url, JSON.parse(data));
+    } else {
+        throw new Error(`Http ${METHOD} not implemented yet.`);
+    }
+}
+
 client.headers = (headers) => {
     if (headers) {
         // set headers

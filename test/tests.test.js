@@ -132,7 +132,31 @@ describe('Tests for tunneled-got', () => {
             resBodyJson.should.have.property('body', data.body);
             resBodyJson.should.have.property('userId', data.userId);
         });
+    });
 
-        // send body
+    describe('fetch() should ...', () => {
+        const postUrl = 'https://jsonplaceholder.typicode.com/posts';
+        const data = {
+            title: 'Kenneth Simon',
+            body: 'Duis aute esse eiusmod aute do fugiat id.',
+            userId: 'd3621c6b-2bfc-5dea-b317-a39060e48531'
+        };
+        it('POST data and return response body as JSON', async () => {
+            const resBodyJson = await client.fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: 'POST',
+                body: "{\"title\":\"Kenneth Simon\",\"body\":\"Duis aute esse eiusmod aute do fugiat id.\",\"userId\":\"d3621c6b-2bfc-5dea-b317-a39060e48531\"}",
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            });
+            resBodyJson.should.have.property('title', data.title);
+            resBodyJson.should.have.property('body', data.body);
+            resBodyJson.should.have.property('userId', data.userId);
+        });
+
+        it('GET data and return response body as JSON', async () => {
+            const resBodyJson = await client.fetch('https://jsonplaceholder.typicode.com/posts/17');
+            resBodyJson.should.have.property('id', 17);
+        });
     });
 });
