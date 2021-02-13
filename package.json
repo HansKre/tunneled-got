@@ -2,9 +2,9 @@
   "name": "tunneled-got",
   "version": "1.0.0",
   "description": "Wraps got and tunnel with convenience methods easy of use.",
-  "main": "main.js",
+  "main": "tunneled-got.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 15000"
   },
   "keywords": [
     "http",
@@ -22,5 +22,10 @@
   "dependencies": {
     "got": "^11.8.1",
     "tunnel": "^0.0.6"
+  },
+  "devDependencies": {
+    "chai": "^4.3.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^8.3.0"
   }
 }

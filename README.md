@@ -1,6 +1,11 @@
 # Description
 
-Wraps got and tunnel with convenience methods easy of use.
+Wraps got and tunnel with convenience methods for easy of use.
+It uses your system-proxy if it is configured by default.
+
+![badge_issues](https://img.shields.io/github/issues/HansKre/tunneled-got)
+![badge_version](https://img.shields.io/npm/v/tunneled-got)
+![badge_minified](https://img.shields.io/bundlephobia/min/tunneled-got)
 
 ## Install
 
@@ -15,7 +20,7 @@ npm install tunneled-got
 const client = require('tunneled-got');
 //use
 try {
-    const responseBody = client().getSync('https://google.com');
+    const responseBody = await client.get('https://my-server.com/api/users');
 } catch (error) {
     console.log(error);
 }
@@ -26,12 +31,17 @@ try {
 ```js
 const options = {
     timeout: 60000,
-    useSystemProxy: true
+    headers: {
+        'x-foo': 'bar'
+    }
 }
-const url = 'https://google.com';
 try {
-    const responseBody = client(options).getSync(url);                
+    const responseBody = await client.options(options).get('https://my-server.com/api/users');
 } catch (error) {
     console.log(error);
 }
 ```
+
+## Backlog
+
+1. Add jsdoc to exported functions
