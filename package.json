@@ -1,6 +1,6 @@
 {
   "name": "tunneled-got",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Wraps got and tunnel with convenience methods easy of use.",
   "main": "tunneled-got.js",
   "scripts": {
