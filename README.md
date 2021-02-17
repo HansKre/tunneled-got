@@ -63,6 +63,18 @@ try {
 }
 ```
 
+## ```POST``` Example with specific types
+
+defaults are: ```contentType='application/json'```, ```responseType='json'```
+
+```js
+try {
+    const responseBody = await client.post(url, data, contentType='application/xml', responseType='application/xml');
+} catch (error) {
+    console.log(error);
+}
+```
+
 ## ```fetch()``` example
 
 Following two requests yield same result:
@@ -98,8 +110,9 @@ console.log(json);
 
 ## Backlog
 
-1. Add jsdoc to exported functions
-2. add automatic token refresh
-3. describe default options
-4. add .reset(), .options(), .headers(), etc. descriptions
-5. add info to new-node-module 'how to pubslish new version' and what's the difference of pushing to git -> push to git != npm publish
+1. Add tests for SOAP-POST [service1](https://www.predic8.de/soap/blz-webservice.htm), [service2](http://www.thomas-bayer.com/soap/csv-xml-converter-webservice.htm)
+2. Add jsdoc to exported functions
+3. add automatic token refresh
+4. describe default options
+5. add .reset(), .options(), .headers(), etc. descriptions
+6. add info to new-node-module 'how to pubslish new version' and what's the difference of pushing to git -> push to git != npm publish
