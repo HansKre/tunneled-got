@@ -1,7 +1,9 @@
 const got = require('got');
 const tunnel = require('tunnel');
 
-let _httpClient;
+let _httpClient,
+    _responseType,
+    _contentType;
 
 const client = {};
 
@@ -19,15 +21,27 @@ httpClient = () => {
 
 client.reset = () => {
     _httpClient = null;
+    _responseType = null;
+    _contentType = null;
+    return httpClient();
+}
+
+client.responseAsJson = () => {
+    _responseType = 'json';
+    return httpClient();
+}
+
+client.contentAsJson = () => {
+    _contentType = 'application/json';
+    return httpClient();
 }
 
 client.get = async (url) => {
     if (!url)
         throw new Error('No url provided');
 
-    const response = await httpClient().get(url, {
-        responseType: 'json'
-    });
+    const options = _responseType ? { responseType: _responseType } : {};
+    const response = await httpClient().get(url, options);
     return response.body;
 }
 
@@ -63,10 +77,10 @@ client.fetch = async (url, options) => {
             data = {};
         }
     }
-    if (!METHOD) {
+    if (!METHOD || METHOD.toUpperCase() === 'GET') {
         // assume 'GET' if not set
         return client.get(url);
-    } else if (METHOD === 'POST') {
+    } else if (METHOD.toUpperCase() === 'POST') {
         // parse data since it gets stringified in post() method while it is already stringified in fetch()-input
         return client.post(url, JSON.parse(data));
     } else {
